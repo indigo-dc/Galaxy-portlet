@@ -110,7 +110,8 @@ public class GalaxyElasticClusterPortlet extends MVCPortlet {
 
     @Override
     public void doView(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
-        renderRequest.setAttribute("json-array", readJsonFile("galaxy-elastic-cluster-template.json"));
+        renderRequest.setAttribute("json-array", 
+            readJsonFile("/home/futuregateway/FutureGateway/fgAPIServer/apps/toscaGalaxyElasticClusterTest/galaxy-elastic-cluster-template.json"));
         super.doView(renderRequest, renderResponse);
     }
 }
