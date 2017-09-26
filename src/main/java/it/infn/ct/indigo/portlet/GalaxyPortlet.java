@@ -112,7 +112,7 @@ public class GalaxyPortlet extends MVCPortlet {
 
     @Override
     public void doView(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
-        renderRequest.setAttribute("json-array", readJsonFile("galaxy-template.json"));
+        renderRequest.setAttribute("json-array", readJsonFile("/home/futuregateway/FutureGateway/fgAPIServer/apps/toscaGalaxyTest/galaxy-template.json"));
         super.doView(renderRequest, renderResponse);
     }
 }

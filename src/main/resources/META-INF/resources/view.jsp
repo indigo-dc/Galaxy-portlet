@@ -17,7 +17,7 @@
                 apiserver_url: ''
                ,apiserver_path : '/apis'
                ,apiserver_ver  : 'v1.0'
-               ,app_id         : 103               
+               ,app_id         : 6               
             };
             /* Settings for sgw.indigo-datacloud.eu
             var webapp_settings = {
@@ -60,7 +60,9 @@
             		  '/iam.token/get-token',
                         function(obj) {
             		    token = obj;
-                        //console.log(obj);
+                        if(obj.token != undefined) {
+                            token = obj.token;
+                        }
                         prepareJobTable();                 // Fills the job table
             		  }
             );
@@ -173,6 +175,36 @@
                 }
                 var myDiv = document.getElementById("modalContent");
                 myDiv.innerHTML = myDiv.innerHTML + out;
+                for(var i = 0; i < jsonArr.length; i++) {
+                  switch(jsonArr[i].type) {
+                    case "password":
+                      if(jsonArr[i].maxlength) {
+                        $("#param_"+jsonArr[i].name).prop("maxLength",jsonArr[i].maxlength);
+                      }
+                      break;
+                    case "text":
+                      if(jsonArr[i].maxlength) {
+                        $("#param_"+jsonArr[i].name).prop("maxLength",jsonArr[i].maxlength);
+                      }
+                      break;
+                    case "list":
+                      if(jsonArr[i].choosen) {
+                        $("#param_"+jsonArr[i].name).val(jsonArr[i].choosen);
+                      }
+                      break;
+                    case "radio":
+                      if(jsonArr[i].choosen) {
+                        var radio_length = $('input[name='+jsonArr[i].name+']').length;
+                        for(var j=0; j<radio_length; j++) {
+                          if($('input[name='+jsonArr[i].name+']')[j].defaultValue == jsonArr[i].choosen) {
+                            $('input[name='+jsonArr[i].name+']')[j].checked=true;
+                            break;
+                          }
+                        }
+                      }
+                      break;
+                  }
+                }
             }
             function getParams() {
                 jsonArr = myJson.parameters;
@@ -238,9 +270,11 @@
             </div>
         <div class="panel-body">
         <p><span class="glyphicon glyphicon-hand-right"></span> Please remember to sign in to use portlet</p>
+        <center>
         <button type="button" class="btn btn-primary btn-lg" onClick="openModal()">
             Launch Galaxy request
         </button>
+        </center>
 
         <!-- Submit record table (begin) -->    
         <div id="jobsDiv" data-modify="false"> 
